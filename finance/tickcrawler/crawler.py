@@ -40,7 +40,6 @@ class Crawler:
                 break
         print ('Out of the yield loop: ' + repr(len(fetchTasks)))
         evloop.run_until_complete(asyncio.wait(fetchTasks))
-        print ("Complete")
 
     def postprocess(self, fut):
         try:
@@ -60,7 +59,8 @@ class HttpCrawler(Crawler):
         print ("Inside httpcrawler: " + url)
         cliResp = yield from aiohttp.request(self.method, url, connector=connector)
         print(cliResp)
-        actualResp = yield from cliResp.read()
+        actualResp = yield from cliResp.text()
+        tupl = (url, actualResp, cliResp.headers)
         cliResp.close()
-        return (url, actualResp)
+        return tupl
 

@@ -126,4 +126,5 @@ class HopeyParser(TextParser):
                 if val is not None and len(val) > 0:
                     dataDict[key] = fn(val)
             (dataDict['ticker'], dataDict['exch']) = self.parseTicker(url)
+            dataDict['type'] = fieldType
             yield dataDict
